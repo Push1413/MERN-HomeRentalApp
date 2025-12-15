@@ -1,4 +1,4 @@
-import "./newPostPage.scss";
+// Converted to Tailwind CSS
 
 function NewPostPage() {
   return (

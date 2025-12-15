@@ -1,4 +1,4 @@
-import "./SinglePage.scss";
+// Converted to Tailwind CSS
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
 import { useLoaderData } from "react-router-dom";

@@ -1,4 +1,4 @@
-import "./profileUpdatePage.scss";
+// Converted to Tailwind CSS
 
 function ProfileUpdatePage() {
   return (

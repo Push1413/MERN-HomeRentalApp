@@ -1,5 +1,3 @@
-import "./agentsPage.scss";
-
 function AgentsPage() {
   const agents = [
     {
@@ -83,65 +81,126 @@ function AgentsPage() {
   ];
 
   return (
-    <div className="agentsPage">
-      <div className="container">
-        <div className="header">
-          <h1>Meet Our Expert Agents</h1>
-          <p>Our team of professional real estate agents is here to help you every step of the way</p>
-        </div>
+    <div style={{padding: '40px 20px', maxWidth: '1400px', margin: '0 auto'}}>
+      <div style={{textAlign: 'center', marginBottom: '48px'}}>
+        <h1 style={{fontSize: '48px', fontWeight: 'bold', color: '#333', marginBottom: '16px'}}>Meet Our Expert Agents</h1>
+        <p style={{fontSize: '20px', color: '#666', maxWidth: '600px', margin: '0 auto'}}>Our team of professional real estate agents is here to help you every step of the way</p>
+      </div>
 
-        <div className="agentsGrid">
-          {agents.map((agent) => (
-            <div key={agent.id} className="agentCard">
-              <div className="agentImage">
-                <img src={agent.image} alt={agent.name} />
-                <div className="rating">
-                  <span>⭐ {agent.rating}</span>
-                </div>
-              </div>
-              
-              <div className="agentInfo">
-                <h3>{agent.name}</h3>
-                <p className="title">{agent.title}</p>
-                <p className="experience">{agent.experience} of experience</p>
-                
-                <div className="specialties">
-                  <h4>Specialties:</h4>
-                  <div className="tags">
-                    {agent.specialties.map((specialty, index) => (
-                      <span key={index} className="tag">{specialty}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <p className="bio">{agent.bio}</p>
-                
-                <div className="stats">
-                  <div className="stat">
-                    <strong>{agent.sales}</strong>
-                  </div>
-                </div>
-
-                <div className="contact">
-                  <div className="contactInfo">
-                    <p>📞 {agent.phone}</p>
-                    <p>✉️ {agent.email}</p>
-                  </div>
-                  <button className="contactBtn">Contact Agent</button>
-                </div>
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '32px', marginBottom: '64px'}}>
+        {agents.map((agent) => (
+          <div key={agent.id} style={{
+            backgroundColor: 'white', 
+            borderRadius: '16px', 
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
+            overflow: 'hidden',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+          }}>
+            <div style={{
+              position: 'relative', 
+              height: '192px', 
+              backgroundColor: '#f3f4f6', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center'
+            }}>
+              <img src={agent.image} alt={agent.name} style={{
+                width: '120px', 
+                height: '120px', 
+                borderRadius: '50%', 
+                objectFit: 'cover', 
+                border: '4px solid white'
+              }} />
+              <div style={{
+                position: 'absolute', 
+                top: '16px', 
+                right: '16px', 
+                backgroundColor: '#fbbf24', 
+                padding: '4px 8px', 
+                borderRadius: '20px', 
+                fontWeight: '600', 
+                fontSize: '14px'
+              }}>
+                <span>⭐ {agent.rating}</span>
               </div>
             </div>
-          ))}
-        </div>
+            
+            <div style={{padding: '32px'}}>
+              <h3 style={{fontSize: '24px', marginBottom: '8px', color: '#333'}}>{agent.name}</h3>
+              <p style={{fontSize: '16px', color: '#fbbf24', fontWeight: '600', marginBottom: '8px'}}>{agent.title}</p>
+              <p style={{fontSize: '14px', color: '#666', marginBottom: '16px'}}>{agent.experience} of experience</p>
+              
+              <div style={{marginBottom: '16px'}}>
+                <h4 style={{fontSize: '16px', marginBottom: '8px', color: '#444'}}>Specialties:</h4>
+                <div style={{display: 'flex', flexWrap: 'wrap', gap: '8px'}}>
+                  {agent.specialties.map((specialty, index) => (
+                    <span key={index} style={{
+                      backgroundColor: '#f3f4f6', 
+                      padding: '4px 8px', 
+                      borderRadius: '16px', 
+                      fontSize: '12px', 
+                      color: '#666'
+                    }}>{specialty}</span>
+                  ))}
+                </div>
+              </div>
 
-        <div className="joinTeam">
-          <h2>Join Our Team</h2>
-          <p>
-            Are you a passionate real estate professional looking to join a winning team? 
-            We're always looking for talented agents to join LamaEstate.
-          </p>
-          <button className="joinBtn">Apply Now</button>
-        </div>
+              <p style={{fontSize: '14px', lineHeight: '1.5', color: '#666', marginBottom: '16px'}}>{agent.bio}</p>
+              
+              <div style={{marginBottom: '24px'}}>
+                <div style={{textAlign: 'center', padding: '16px', backgroundColor: '#f9f9f9', borderRadius: '8px'}}>
+                  <strong style={{color: '#333', fontSize: '16px'}}>{agent.sales}</strong>
+                </div>
+              </div>
+
+              <div>
+                <div style={{marginBottom: '16px'}}>
+                  <p style={{fontSize: '14px', color: '#666', marginBottom: '4px'}}>📞 {agent.phone}</p>
+                  <p style={{fontSize: '14px', color: '#666', marginBottom: '4px'}}>✉️ {agent.email}</p>
+                </div>
+                <button style={{
+                  width: '100%', 
+                  padding: '12px', 
+                  backgroundColor: '#fbbf24', 
+                  color: '#333', 
+                  border: 'none', 
+                  borderRadius: '6px', 
+                  fontWeight: '600', 
+                  cursor: 'pointer'
+                }}>Contact Agent</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{
+        textAlign: 'center', 
+        padding: '48px 32px', 
+        backgroundColor: '#f9f9f9', 
+        borderRadius: '16px'
+      }}>
+        <h2 style={{fontSize: '32px', marginBottom: '16px', color: '#333'}}>Join Our Team</h2>
+        <p style={{
+          fontSize: '18px', 
+          color: '#666', 
+          marginBottom: '32px', 
+          maxWidth: '600px', 
+          margin: '0 auto 32px auto'
+        }}>
+          Are you a passionate real estate professional looking to join a winning team? 
+          We're always looking for talented agents to join LamaEstate.
+        </p>
+        <button style={{
+          padding: '16px 32px', 
+          backgroundColor: '#333', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '6px', 
+          fontSize: '18px', 
+          fontWeight: '600', 
+          cursor: 'pointer'
+        }}>Apply Now</button>
       </div>
     </div>
   );

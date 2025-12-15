@@ -1,4 +1,3 @@
-import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import apiRequest from "../../lib/apiRequest";
@@ -74,22 +73,43 @@ function Register() {
   };
 
   return (
-    <div className="register">
-      <div className="formContainer">
-        <form onSubmit={handleSubmit}>
-          <h1>Create an Account</h1>
+    <div style={{height: '100vh', display: 'flex'}}>
+      <div style={{flex: 3, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <form onSubmit={handleSubmit} style={{
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '20px', 
+          width: '100%', 
+          maxWidth: '400px', 
+          padding: '0 32px'
+        }}>
+          <h1 style={{fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '16px', color: '#333'}}>Create an Account</h1>
           <input 
             name="username" 
             type="text" 
             placeholder="Username (min 3 characters)" 
             required 
             minLength={3}
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
           <input 
             name="email" 
             type="email" 
             placeholder="Email Address" 
             required 
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
           <input 
             name="password" 
@@ -97,6 +117,13 @@ function Register() {
             placeholder="Password (min 6 characters)" 
             required 
             minLength={6}
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
           <input 
             name="confirmPassword" 
@@ -104,17 +131,60 @@ function Register() {
             placeholder="Confirm Password" 
             required 
             minLength={6}
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
-          <button disabled={isLoading}>
+          <button 
+            disabled={isLoading}
+            style={{
+              padding: '20px', 
+              borderRadius: '6px', 
+              border: 'none', 
+              backgroundColor: isLoading ? '#b3d9d9' : '#0d9488', 
+              color: 'white', 
+              fontWeight: 'bold', 
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              fontSize: '16px'
+            }}
+          >
             {isLoading ? "Creating Account..." : "Register"}
           </button>
-          {error && <span className="error">{error}</span>}
-          {success && <span className="success">{success}</span>}
-          <Link to="/login">Already have an account? Sign in</Link>
+          {error && <span style={{
+            color: '#dc2626', 
+            backgroundColor: '#fef2f2', 
+            padding: '8px', 
+            borderRadius: '6px', 
+            border: '1px solid #fecaca'
+          }}>{error}</span>}
+          {success && <span style={{
+            color: '#16a34a', 
+            backgroundColor: '#f0fdf4', 
+            padding: '8px', 
+            borderRadius: '6px', 
+            border: '1px solid #bbf7d0'
+          }}>{success}</span>}
+          <Link to="/login" style={{
+            fontSize: '14px', 
+            color: '#666', 
+            borderBottom: '1px solid #666', 
+            width: 'max-content',
+            textDecoration: 'none'
+          }}>Already have an account? Sign in</Link>
         </form>
       </div>
-      <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+      <div style={{
+        flex: 2, 
+        backgroundColor: '#fcf5f3', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        <img src="/bg.png" alt="" style={{width: '100%'}} />
       </div>
     </div>
   );
