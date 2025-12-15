@@ -39,3 +39,18 @@ jspm_packages
 .DS_Store
 
 #Excluding build directory
+
+# Markdown files
+*.md
+*.MD
+
+# Kiro IDE files and directories
+.kiro/
+*.kiro
+.kiro-*
+kiro-*
+
+# Additional documentation files
+*.txt
+*.doc
+*.docx

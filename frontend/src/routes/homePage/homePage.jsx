@@ -8,10 +8,10 @@ function HomePage() {
         <div className="wrapper">
           <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-            explicabo suscipit cum eius, iure est nulla animi consequatur
-            facilis id pariatur fugit quos laudantium temporibus dolor ea
-            repellat provident impedit!
+            Discover your perfect home with our comprehensive real estate platform. 
+            Whether you're looking for a cozy apartment, spacious house, or luxury condo, 
+            we connect you with the best properties in your desired location. Start your 
+            journey to homeownership today with our expert guidance and extensive listings.
           </p>
           <SearchBar />
           <div className="boxes">
@@ -20,12 +20,12 @@ function HomePage() {
               <h2>Years of Experience</h2>
             </div>
             <div className="box">
-              <h1>200</h1>
-              <h2>Award Gained</h2>
+              <h1>200+</h1>
+              <h2>Awards Gained</h2>
             </div>
             <div className="box">
               <h1>2000+</h1>
-              <h2>Property Ready</h2>
+              <h2>Properties Available</h2>
             </div>
           </div>
         </div>

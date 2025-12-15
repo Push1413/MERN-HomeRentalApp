@@ -8,7 +8,8 @@ import authRoute from "./routes/auth.route.js";
 
 const app = express();
 const corsOptions = {
-    origin: process.env.CLIENT_URL
+    origin: process.env.CLIENT_URL,
+    credentials: true
 };
 app.use(cors(corsOptions));
 app.use(express.json());

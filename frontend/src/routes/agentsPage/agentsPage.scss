@@ -1,0 +1,232 @@
+.agentsPage {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .container {
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      p {
+        font-size: 1.2rem;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    }
+
+    .agentsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+
+      .agentCard {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .agentImage {
+          position: relative;
+          height: 200px;
+          background: #f0f0f0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+          }
+
+          .rating {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fece51;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+          }
+        }
+
+        .agentInfo {
+          padding: 2rem;
+
+          h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+          }
+
+          .title {
+            font-size: 1rem;
+            color: #fece51;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+          }
+
+          .experience {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+          }
+
+          .specialties {
+            margin-bottom: 1rem;
+
+            h4 {
+              font-size: 1rem;
+              margin-bottom: 0.5rem;
+              color: #444;
+            }
+
+            .tags {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+
+              .tag {
+                background: #f0f0f0;
+                padding: 4px 8px;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                color: #666;
+              }
+            }
+          }
+
+          .bio {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #666;
+            margin-bottom: 1rem;
+          }
+
+          .stats {
+            margin-bottom: 1.5rem;
+
+            .stat {
+              text-align: center;
+              padding: 1rem;
+              background: #f9f9f9;
+              border-radius: 8px;
+
+              strong {
+                color: #333;
+                font-size: 1rem;
+              }
+            }
+          }
+
+          .contact {
+            .contactInfo {
+              margin-bottom: 1rem;
+
+              p {
+                font-size: 0.9rem;
+                color: #666;
+                margin-bottom: 0.3rem;
+              }
+            }
+
+            .contactBtn {
+              width: 100%;
+              padding: 0.8rem;
+              background: #fece51;
+              color: #333;
+              border: none;
+              border-radius: 5px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+
+              &:hover {
+                background: #e6b849;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .joinTeam {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #f9f9f9;
+      border-radius: 15px;
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      p {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .joinBtn {
+        padding: 1rem 2rem;
+        background: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background: #555;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 10px;
+
+    .container {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .agentsGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+
+        .agentCard .agentInfo {
+          padding: 1.5rem;
+        }
+      }
+
+      .joinTeam {
+        padding: 2rem 1rem;
+      }
+    }
+  }
+}
