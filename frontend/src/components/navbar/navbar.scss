@@ -9,12 +9,14 @@ nav {
   a {
     transition: all 0.4s ease;
 
-    @include sm {
-      display: none;
-    }
-
     &:hover {
       scale: 1.05;
+    }
+  }
+
+  .left a {
+    @include sm {
+      display: none;
     }
   }
 
@@ -53,6 +55,7 @@ nav {
     justify-content: flex-end;
     background-color: #fcf5f3;
     height: 100%;
+    gap: 10px;
 
     @include md {
       background-color: transparent;
@@ -60,7 +63,12 @@ nav {
 
     a {
       padding: 12px 24px;
-      margin: 20px;
+      margin: 0;
+      display: inline-block !important;
+      white-space: nowrap;
+      cursor: pointer;
+      z-index: 10;
+      position: relative;
     }
 
     .user{

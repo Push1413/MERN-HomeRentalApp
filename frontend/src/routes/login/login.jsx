@@ -1,4 +1,3 @@
-import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import apiRequest from "../../lib/apiRequest";
@@ -44,16 +43,30 @@ function Login() {
   };
 
   return (
-    <div className="login">
-      <div className="formContainer">
-        <form onSubmit={handleSubmit}>
-          <h1>Welcome back</h1>
+    <div style={{height: '100vh', display: 'flex'}}>
+      <div style={{flex: 3, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <form onSubmit={handleSubmit} style={{
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '20px', 
+          width: '100%', 
+          maxWidth: '400px', 
+          padding: '0 32px'
+        }}>
+          <h1 style={{fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '16px', color: '#333'}}>Welcome back</h1>
           <input 
             name="username" 
             required 
             minLength={3} 
             type="text" 
             placeholder="Username" 
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
           <input 
             name="password" 
@@ -61,16 +74,53 @@ function Login() {
             minLength={6}
             type="password" 
             placeholder="Password" 
+            style={{
+              padding: '20px', 
+              border: '1px solid #999', 
+              borderRadius: '6px', 
+              fontSize: '16px',
+              outline: 'none'
+            }}
           />
-          <button disabled={isLoading}>
+          <button 
+            disabled={isLoading}
+            style={{
+              padding: '20px', 
+              borderRadius: '6px', 
+              border: 'none', 
+              backgroundColor: isLoading ? '#b3d9d9' : '#0d9488', 
+              color: 'white', 
+              fontWeight: 'bold', 
+              cursor: isLoading ? 'not-allowed' : 'pointer',
+              fontSize: '16px'
+            }}
+          >
             {isLoading ? "Signing in..." : "Login"}
           </button>
-          {error && <span className="error">{error}</span>}
-          <Link to="/register">Don't have an account? Sign up</Link>
+          {error && <span style={{
+            color: '#dc2626', 
+            backgroundColor: '#fef2f2', 
+            padding: '8px', 
+            borderRadius: '6px', 
+            border: '1px solid #fecaca'
+          }}>{error}</span>}
+          <Link to="/register" style={{
+            fontSize: '14px', 
+            color: '#666', 
+            borderBottom: '1px solid #666', 
+            width: 'max-content',
+            textDecoration: 'none'
+          }}>Don't have an account? Sign up</Link>
         </form>
       </div>
-      <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+      <div style={{
+        flex: 2, 
+        backgroundColor: '#fcf5f3', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      }}>
+        <img src="/bg.png" alt="" style={{width: '100%'}} />
       </div>
     </div>
   );

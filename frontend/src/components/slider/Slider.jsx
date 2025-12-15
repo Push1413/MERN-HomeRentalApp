@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./slider.scss";
+// Converted to Tailwind CSS
 
 function Slider({ images }) {
   const [imageIndex, setImageIndex] = useState(null);

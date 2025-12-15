@@ -1,4 +1,4 @@
-import './list.scss'
+// Converted to Tailwind CSS
 import Card from"../card/Card"
 
 function List(posts){
