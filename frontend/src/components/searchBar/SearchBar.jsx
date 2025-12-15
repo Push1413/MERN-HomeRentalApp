@@ -68,7 +68,7 @@ function SearchBar() {
           }}
         />
         <Link 
-          to={`/list?city=${query.location}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}`}
+          to={`/list?city=${query.location || ""}&minPrice=${query.minPrice || ""}&maxPrice=${query.maxPrice || ""}`}
           style={{
             backgroundColor: '#fbbf24', 
             padding: '0 30px', 

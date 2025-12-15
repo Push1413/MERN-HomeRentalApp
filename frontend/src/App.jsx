@@ -6,6 +6,9 @@ import ContactPage from "./routes/contactPage/contactPage";
 import AgentsPage from "./routes/agentsPage/agentsPage";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
+import ListPage from "./routes/listPage/ListPage";
+import ProfilePage from "./routes/profilePage/profilePage";
+import SinglePage from "./routes/singlePage/SinglePage";
 import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
@@ -37,6 +40,18 @@ function App() {
         {
           path: "/register",
           element: <Register />
+        },
+        {
+          path: "/list",
+          element: <ListPage />
+        },
+        {
+          path: "/profile",
+          element: <ProfilePage />
+        },
+        {
+          path: "/property/:id",
+          element: <SinglePage />
         }
       ]
     }
