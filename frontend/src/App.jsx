@@ -10,40 +10,41 @@ import ProfilePage from "./routes/profilePage/profilePage";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
-      children:[
+      children: [
         {
-          path:"/",
-          element:<HomePage/>
+          path: "/",
+          element: <HomePage />
         },
         {
-          path:"/list",
-          element:<ListPage/>,
-          loader:listPageLoader
-          
+          path: "/list",
+          element: <ListPage />,
+          loader: listPageLoader
+
         },
         {
-          path:"/:id",
-          element:<SinglePage/>,
-          loader:singlePageLoader
+          path: "/:id",
+          element: <SinglePage />,
+          loader: singlePageLoader
         },
         {
-          path:"/profile",
-          element:<ProfilePage/>,
-          loader:profilePageLoader
+          path: "/profile",
+          element: <ProfilePage />,
+          loader: profilePageLoader
         },
         {
-          path:"/login",
-          element:<Login/>
+          path: "/login",
+          element: <Login />
         },
         {
-          path:"/register",
-          element:<Register/>
+          path: "/register",
+          element: <Register />
         }
       ]
     }
@@ -51,7 +52,9 @@ function App() {
 
   return (
 
-    <RouterProvider router={router}/>
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   );
 }
 
