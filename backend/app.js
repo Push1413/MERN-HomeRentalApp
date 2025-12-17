@@ -15,6 +15,15 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// Health check endpoint
+app.get("/", (req, res) => {
+    res.json({ 
+        message: "LamaEstate API is running!", 
+        status: "healthy",
+        timestamp: new Date().toISOString()
+    });
+});
+
 app.use("/api/post", postRoute);
 app.use("/api/auth", authRoute);
 

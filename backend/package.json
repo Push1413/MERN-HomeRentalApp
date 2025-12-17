@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "type": "module",
   "main": "app.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "start": "node app.js",
+    "build": "npx prisma generate",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seed": "node seedData.js"
   },
   "keywords": [],
   "author": "",
