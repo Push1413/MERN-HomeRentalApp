@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma.js";
+import jwt from "jsonwebtoken";
 
 export const getPosts = async (req, res) => {
   const query = req.query;
@@ -66,7 +67,30 @@ export const getPost = async (req, res) => {
       },
     });
 
-    res.status(200).json({ ...post, isSaved: false });
+    let isSaved = false;
+    const token = req.cookies.token;
+
+    if (token) {
+      // Decode token but don't verify strict signature here to just get ID (or use verifyToken middleware if strictly needed)
+      // For simplicity/speed we'll assume valid if present or use a utility
+      // Actually, cleaner to rely on jwt.verify inside a try/catch or helper
+      try {
+        const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const saved = await prisma.savedPost.findUnique({
+          where: {
+            userId_postId: {
+              postId: id,
+              userId: payload.id,
+            },
+          },
+        });
+        isSaved = saved ? true : false;
+      } catch (e) {
+        // ignore invalid token
+      }
+    }
+
+    res.status(200).json({ ...post, isSaved });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get post" });

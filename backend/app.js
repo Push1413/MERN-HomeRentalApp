@@ -15,10 +15,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+import userRoute from "./routes/user.route.js";
+
 // Health check endpoint
 app.get("/", (req, res) => {
-    res.json({ 
-        message: "LamaEstate API is running!", 
+    res.json({
+        message: "LamaEstate API is running!",
         status: "healthy",
         timestamp: new Date().toISOString()
     });
@@ -26,6 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/post", postRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 
 app.listen(PORT, () => {

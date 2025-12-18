@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
 import DOMPurify from "dompurify";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function SinglePage() {
   const { id } = useParams();
@@ -9,6 +10,22 @@ export default function SinglePage() {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { currentUser } = useContext(AuthContext);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+    setSaved((prev) => !prev);
+    try {
+      await apiRequest.post("/users/save", { postId: property.id });
+    } catch (err) {
+      console.log(err);
+      setSaved((prev) => !prev);
+    }
+  };
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -17,6 +34,7 @@ export default function SinglePage() {
         setError("");
         const response = await apiRequest.get(`/post/${id}`);
         setProperty(response.data);
+        setSaved(response.data.isSaved);
       } catch (err) {
         console.error("Error fetching property:", err);
         setError("Failed to load property details. Please try again.");
@@ -38,7 +56,7 @@ export default function SinglePage() {
         backgroundColor: '#f9f9f9',
         borderRadius: '12px'
       }}>
-        <p style={{color: '#666', fontSize: '18px'}}>Loading property details...</p>
+        <p style={{ color: '#666', fontSize: '18px' }}>Loading property details...</p>
       </div>
     );
   }
@@ -52,15 +70,15 @@ export default function SinglePage() {
         borderRadius: '12px',
         border: '1px solid #fecaca'
       }}>
-        <p style={{color: '#dc2626', fontSize: '18px'}}>{error || "Property not found"}</p>
+        <p style={{ color: '#dc2626', fontSize: '18px' }}>{error || "Property not found"}</p>
       </div>
     );
   }
 
   return (
-    <div style={{padding: '20px', maxWidth: '1200px', margin: '0 auto'}}>
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       {/* Back Button */}
-      <button 
+      <button
         onClick={() => navigate(-1)}
         style={{
           display: 'flex',
@@ -79,11 +97,11 @@ export default function SinglePage() {
         ← Back to Listings
       </button>
 
-      <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px'}}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '40px' }}>
         {/* Main Content */}
         <div>
           {/* Image Gallery */}
-          <div style={{marginBottom: '32px'}}>
+          <div style={{ marginBottom: '32px' }}>
             {property.postDetail?.images && property.postDetail.images.length > 0 ? (
               <div style={{
                 display: 'grid',
@@ -98,7 +116,7 @@ export default function SinglePage() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }} />
-                <div style={{display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px'}}>
+                <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: '8px' }}>
                   {property.postDetail.images.slice(1, 3).map((img, index) => (
                     <div key={index} style={{
                       backgroundImage: `url(${img})`,
@@ -125,18 +143,18 @@ export default function SinglePage() {
           </div>
 
           {/* Property Info */}
-          <div style={{marginBottom: '32px'}}>
-            <h1 style={{fontSize: '36px', fontWeight: 'bold', color: '#333', marginBottom: '16px'}}>
+          <div style={{ marginBottom: '32px' }}>
+            <h1 style={{ fontSize: '36px', fontWeight: 'bold', color: '#333', marginBottom: '16px' }}>
               {property.title}
             </h1>
-            <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px'}}>
-              <span style={{fontSize: '18px'}}>📍</span>
-              <span style={{fontSize: '18px', color: '#666'}}>{property.address}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '18px' }}>📍</span>
+              <span style={{ fontSize: '18px', color: '#666' }}>{property.address}</span>
             </div>
-            <div style={{fontSize: '32px', fontWeight: 'bold', color: '#fbbf24', marginBottom: '24px'}}>
+            <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#fbbf24', marginBottom: '24px' }}>
               ${property.price.toLocaleString()}
             </div>
-            
+
             {property.postDetail?.desc && (
               <div style={{
                 padding: '20px',
@@ -148,7 +166,7 @@ export default function SinglePage() {
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(property.postDetail.desc),
                   }}
-                  style={{color: '#666', lineHeight: '1.6'}}
+                  style={{ color: '#666', lineHeight: '1.6' }}
                 />
               </div>
             )}
@@ -165,28 +183,28 @@ export default function SinglePage() {
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             marginBottom: '24px'
           }}>
-            <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px'}}>
+            <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>
               Property Details
             </h3>
-            
-            <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span style={{color: '#666'}}>🛏️ Bedrooms:</span>
-                <span style={{fontWeight: '600'}}>{property.bedroom}</span>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>🛏️ Bedrooms:</span>
+                <span style={{ fontWeight: '600' }}>{property.bedroom}</span>
               </div>
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span style={{color: '#666'}}>🚿 Bathrooms:</span>
-                <span style={{fontWeight: '600'}}>{property.bathroom}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>🚿 Bathrooms:</span>
+                <span style={{ fontWeight: '600' }}>{property.bathroom}</span>
               </div>
               {property.postDetail?.size && (
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                  <span style={{color: '#666'}}>📐 Size:</span>
-                  <span style={{fontWeight: '600'}}>{property.postDetail.size} sqft</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#666' }}>📐 Size:</span>
+                  <span style={{ fontWeight: '600' }}>{property.postDetail.size} sqft</span>
                 </div>
               )}
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span style={{color: '#666'}}>🏠 Type:</span>
-                <span style={{fontWeight: '600', textTransform: 'capitalize'}}>{property.property}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: '#666' }}>🏠 Type:</span>
+                <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{property.property}</span>
               </div>
             </div>
           </div>
@@ -200,27 +218,27 @@ export default function SinglePage() {
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               marginBottom: '24px'
             }}>
-              <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px'}}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>
                 Features & Amenities
               </h3>
-              
-              <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {property.postDetail.utilities && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>⚡ Utilities:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.utilities}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>⚡ Utilities:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.utilities}</p>
                   </div>
                 )}
                 {property.postDetail.pet && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>🐕 Pet Policy:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.pet}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>🐕 Pet Policy:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.pet}</p>
                   </div>
                 )}
                 {property.postDetail.income && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>💰 Income Requirement:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.income}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>💰 Income Requirement:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.income}</p>
                   </div>
                 )}
               </div>
@@ -236,27 +254,27 @@ export default function SinglePage() {
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               marginBottom: '24px'
             }}>
-              <h3 style={{fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px'}}>
+              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>
                 Nearby Places
               </h3>
-              
-              <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {property.postDetail.school && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>🏫 School:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.school}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>🏫 School:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.school}</p>
                   </div>
                 )}
                 {property.postDetail.bus && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>🚌 Bus Stop:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.bus}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>🚌 Bus Stop:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.bus}</p>
                   </div>
                 )}
                 {property.postDetail.restaurant && (
                   <div>
-                    <span style={{color: '#666', fontSize: '14px'}}>🍽️ Restaurant:</span>
-                    <p style={{margin: '4px 0 0 0', fontWeight: '500'}}>{property.postDetail.restaurant}</p>
+                    <span style={{ color: '#666', fontSize: '14px' }}>🍽️ Restaurant:</span>
+                    <p style={{ margin: '4px 0 0 0', fontWeight: '500' }}>{property.postDetail.restaurant}</p>
                   </div>
                 )}
               </div>
@@ -264,7 +282,7 @@ export default function SinglePage() {
           )}
 
           {/* Action Buttons */}
-          <div style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <button style={{
               width: '100%',
               padding: '16px',
@@ -282,22 +300,24 @@ export default function SinglePage() {
             }}>
               💬 Send Message
             </button>
-            <button style={{
-              width: '100%',
-              padding: '16px',
-              backgroundColor: '#333',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: '600',
-              fontSize: '16px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px'
-            }}>
-              ❤️ Save Property
+            <button
+              onClick={handleSave}
+              style={{
+                width: '100%',
+                padding: '16px',
+                backgroundColor: saved ? "#fece51" : "white",
+                color: '#333',
+                border: '1px solid #fece51',
+                borderRadius: '8px',
+                fontWeight: '600',
+                fontSize: '16px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}>
+              {saved ? "❤️ Property Saved" : "🤍 Save Property"}
             </button>
           </div>
         </div>
