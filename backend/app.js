@@ -51,6 +51,54 @@ app.post("/api/predict", async (req, res) => {
     }
 });
 
+// Proxy for Python ML Service
+app.post("/api/predict", async (req, res) => {
+    try {
+        const response = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(req.body)
+        });
+
+        if (!response.ok) {
+            throw new Error(`ML Service responded with ${response.status}`);
+        }
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error("ML Service Error:", error);
+        res.status(503).json({
+            error: "ML Service unavailable",
+            details: error.message
+        });
+    }
+});
+
+// Proxy for Python ML Service
+app.post("/api/predict", async (req, res) => {
+    try {
+        const response = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(req.body)
+        });
+
+        if (!response.ok) {
+            throw new Error(`ML Service responded with ${response.status}`);
+        }
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error("ML Service Error:", error);
+        res.status(503).json({
+            error: "ML Service unavailable",
+            details: error.message
+        });
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`App is listing to port: ${PORT}`);
