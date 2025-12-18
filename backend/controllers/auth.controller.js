@@ -42,7 +42,9 @@ export const register = async (req, res) => {
             data: {
                 username,
                 email,
+                email,
                 password: hashedPassword,
+                role: req.body.role || "CUSTOMER"
             },
         });
 
@@ -83,6 +85,7 @@ export const login = async (req, res) => {
         const token = jwt.sign(
             {
                 id: user.id,
+                role: user.role,
                 isAdmin: false,
             },
             process.env.JWT_SECRET,

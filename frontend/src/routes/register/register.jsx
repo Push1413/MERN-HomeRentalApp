@@ -20,6 +20,7 @@ function Register() {
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
+    const role = formData.get("role"); // Add role extraction
 
     // Client-side validation
     if (!username || !email || !password || !confirmPassword) {
@@ -59,6 +60,7 @@ function Register() {
         username,
         email,
         password,
+        role, // Pass role
       });
 
       setSuccess("Account created successfully! Redirecting to login...");
@@ -73,81 +75,95 @@ function Register() {
   };
 
   return (
-    <div style={{height: '100vh', display: 'flex'}}>
-      <div style={{flex: 3, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div style={{ height: '100vh', display: 'flex' }}>
+      <div style={{ flex: 3, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <form onSubmit={handleSubmit} style={{
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '20px', 
-          width: '100%', 
-          maxWidth: '400px', 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          width: '100%',
+          maxWidth: '400px',
           padding: '0 32px'
         }}>
-          <h1 style={{fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '16px', color: '#333'}}>Create an Account</h1>
-          <input 
-            name="username" 
-            type="text" 
-            placeholder="Username (min 3 characters)" 
-            required 
+          <h1 style={{ fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '16px', color: '#333' }}>Create an Account</h1>
+          <input
+            name="username"
+            type="text"
+            placeholder="Username (min 3 characters)"
+            required
             minLength={3}
             style={{
-              padding: '20px', 
-              border: '1px solid #999', 
-              borderRadius: '6px', 
+              padding: '20px',
+              border: '1px solid #999',
+              borderRadius: '6px',
               fontSize: '16px',
               outline: 'none'
             }}
           />
-          <input 
-            name="email" 
-            type="email" 
-            placeholder="Email Address" 
-            required 
+          <input
+            name="email"
+            type="email"
+            placeholder="Email Address"
+            required
             style={{
-              padding: '20px', 
-              border: '1px solid #999', 
-              borderRadius: '6px', 
+              padding: '20px',
+              border: '1px solid #999',
+              borderRadius: '6px',
               fontSize: '16px',
               outline: 'none'
             }}
           />
-          <input 
-            name="password" 
-            type="password" 
-            placeholder="Password (min 6 characters)" 
-            required 
+          <input
+            name="password"
+            type="password"
+            placeholder="Password (min 6 characters)"
+            required
             minLength={6}
             style={{
-              padding: '20px', 
-              border: '1px solid #999', 
-              borderRadius: '6px', 
+              padding: '20px',
+              border: '1px solid #999',
+              borderRadius: '6px',
               fontSize: '16px',
               outline: 'none'
             }}
           />
-          <input 
-            name="confirmPassword" 
-            type="password" 
-            placeholder="Confirm Password" 
-            required 
+          <input
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            required
             minLength={6}
             style={{
-              padding: '20px', 
-              border: '1px solid #999', 
-              borderRadius: '6px', 
+              padding: '20px',
+              border: '1px solid #999',
+              borderRadius: '6px',
               fontSize: '16px',
               outline: 'none'
             }}
           />
-          <button 
+          <select
+            name="role"
+            style={{
+              padding: '20px',
+              border: '1px solid #999',
+              borderRadius: '6px',
+              fontSize: '16px',
+              outline: 'none',
+              backgroundColor: 'white'
+            }}
+          >
+            <option value="CUSTOMER">Customer</option>
+            <option value="REALTOR">Realtor</option>
+          </select>
+          <button
             disabled={isLoading}
             style={{
-              padding: '20px', 
-              borderRadius: '6px', 
-              border: 'none', 
-              backgroundColor: isLoading ? '#b3d9d9' : '#0d9488', 
-              color: 'white', 
-              fontWeight: 'bold', 
+              padding: '20px',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: isLoading ? '#b3d9d9' : '#0d9488',
+              color: 'white',
+              fontWeight: 'bold',
               cursor: isLoading ? 'not-allowed' : 'pointer',
               fontSize: '16px'
             }}
@@ -155,36 +171,36 @@ function Register() {
             {isLoading ? "Creating Account..." : "Register"}
           </button>
           {error && <span style={{
-            color: '#dc2626', 
-            backgroundColor: '#fef2f2', 
-            padding: '8px', 
-            borderRadius: '6px', 
+            color: '#dc2626',
+            backgroundColor: '#fef2f2',
+            padding: '8px',
+            borderRadius: '6px',
             border: '1px solid #fecaca'
           }}>{error}</span>}
           {success && <span style={{
-            color: '#16a34a', 
-            backgroundColor: '#f0fdf4', 
-            padding: '8px', 
-            borderRadius: '6px', 
+            color: '#16a34a',
+            backgroundColor: '#f0fdf4',
+            padding: '8px',
+            borderRadius: '6px',
             border: '1px solid #bbf7d0'
           }}>{success}</span>}
           <Link to="/login" style={{
-            fontSize: '14px', 
-            color: '#666', 
-            borderBottom: '1px solid #666', 
+            fontSize: '14px',
+            color: '#666',
+            borderBottom: '1px solid #666',
             width: 'max-content',
             textDecoration: 'none'
           }}>Already have an account? Sign in</Link>
         </form>
       </div>
       <div style={{
-        flex: 2, 
-        backgroundColor: '#fcf5f3', 
-        display: 'flex', 
-        alignItems: 'center', 
+        flex: 2,
+        backgroundColor: '#fcf5f3',
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <img src="/bg.png" alt="" style={{width: '100%'}} />
+        <img src="/bg.png" alt="" style={{ width: '100%' }} />
       </div>
     </div>
   );

@@ -51,6 +51,13 @@ jspm_packages
 kiro-*
 
 # Additional documentation files
-*.txt
+# *.txt
+# !requirements.txt
 *.doc
 *.docx
+
+# Python/ML ignores
+venv/
+__pycache__/
+*.pkl
+*.pyc

@@ -9,6 +9,7 @@ import Register from "./routes/register/register";
 import ListPage from "./routes/listPage/ListPage";
 import ProfilePage from "./routes/profilePage/profilePage";
 import SinglePage from "./routes/singlePage/SinglePage";
+import NewPostPage from "./routes/newPostPage/NewPostPage";
 import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
@@ -52,6 +53,10 @@ function App() {
         {
           path: "/property/:id",
           element: <SinglePage />
+        },
+        {
+          path: "/add",
+          element: <NewPostPage />
         }
       ]
     }
