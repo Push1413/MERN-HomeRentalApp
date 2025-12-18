@@ -1,6 +1,59 @@
 // Converted to Tailwind CSS
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
+import "./newPostPage.css";
 
 function NewPostPage() {
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [suggestedPrice, setSuggestedPrice] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser || currentUser.role !== "REALTOR") {
+      navigate("/");
+    }
+  }, [currentUser, navigate]);
+
+  const handlePredictPrice = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    // Get values directly from the form
+    const form = e.target.closest("form");
+    const bedroom = form.bedroom.value;
+    const bathroom = form.bathroom.value;
+    const latitude = form.latitude.value;
+    const longitude = form.longitude.value;
+
+    if (!bedroom || !bathroom || !latitude || !longitude) {
+      setError("Please fill in Bedroom, Bathroom, Latitude, and Longitude first!");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const res = await apiRequest.post("/predict", {
+        bedroom: Number(bedroom),
+        bathroom: Number(bathroom),
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+      });
+
+      form.price.value = res.data.estimated_price;
+      setSuggestedPrice(res.data.estimated_price);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to get prediction");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="newPostPage">
       <div className="formContainer">
@@ -11,9 +64,20 @@ function NewPostPage() {
               <label htmlFor="title">Title</label>
               <input id="title" name="title" type="text" />
             </div>
-            <div className="item">
+            <div className="item price">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" />
+              <div style={{ display: "flex", gap: "10px" }}>
+                <input id="price" name="price" type="number" />
+                <button
+                  onClick={handlePredictPrice}
+                  disabled={isLoading}
+                  className="aiButton"
+                >
+                  {isLoading ? "Thinking..." : "✨ AI Suggest"}
+                </button>
+              </div>
+              {suggestedPrice && <span style={{ color: "green", fontSize: "12px" }}>AI suggested: ${suggestedPrice}</span>}
+              {error && <span style={{ color: "red", fontSize: "12px" }}>{error}</span>}
             </div>
             <div className="item">
               <label htmlFor="address">Address</label>
@@ -21,6 +85,8 @@ function NewPostPage() {
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
+              {/* Added basic textarea for description since it was missing input */}
+              <textarea id="desc" name="desc" />
             </div>
             <div className="item">
               <label htmlFor="city">City</label>

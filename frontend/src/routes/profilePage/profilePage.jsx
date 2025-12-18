@@ -52,6 +52,7 @@ function ProfilePage() {
             )}
           </div>
 
+<<<<<<< Updated upstream
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb'}}>
             <h2 style={{fontSize: '24px', fontWeight: 'bold', color: '#333'}}>My Listings</h2>
             <button style={{
@@ -63,6 +64,23 @@ function ProfilePage() {
               fontWeight: '600',
               cursor: 'pointer'
             }}>Create New Post</button>
+=======
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #e5e7eb' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>My Listings</h2>
+            {currentUser.role === "REALTOR" && (
+              <button
+                onClick={handleCreatePost}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#333',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}>Create New Post</button>
+            )}
+>>>>>>> Stashed changes
           </div>
           
           <div style={{
