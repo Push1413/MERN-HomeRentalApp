@@ -1,11 +1,8 @@
-
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import List from "../../components/list/List";
-import { Link, useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const { currentUser } = useContext(AuthContext);
