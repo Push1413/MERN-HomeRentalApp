@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../../context/AuthContext";
+import Card from "../../components/card/Card";
 
 export default function SinglePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [property, setProperty] = useState(null);
+  const [similarPosts, setSimilarPosts] = useState([]);
+  const [nearbyPosts, setNearbyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { currentUser } = useContext(AuthContext);
@@ -47,6 +50,30 @@ export default function SinglePage() {
       fetchProperty();
     }
   }, [id]);
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      if (!property) return;
+
+      try {
+        // Fetch Similar Properties
+        const similarRes = await apiRequest.get(`/post/${property.id}/similar`);
+        setSimilarPosts(similarRes.data);
+
+        // Fetch Nearby Properties if lat/lng are available
+        if (property.latitude && property.longitude) {
+          const nearbyRes = await apiRequest.get(`/post/nearby?lat=${property.latitude}&lng=${property.longitude}`);
+          // Filter out the current property from nearby results if it shows up
+          const filteredNearby = nearbyRes.data.filter(p => p.id !== property.id);
+          setNearbyPosts(filteredNearby);
+        }
+      } catch (err) {
+        console.error("Error fetching recommendations:", err);
+      }
+    };
+
+    fetchRecommendations();
+  }, [property]);
 
   if (loading) {
     return (
@@ -171,6 +198,35 @@ export default function SinglePage() {
               </div>
             )}
           </div>
+
+          {/* Similar Properties Section */}
+          {similarPosts.length > 0 && (
+            <div style={{ marginBottom: '40px' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#333', marginBottom: '16px' }}>
+                Similar Properties
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {similarPosts.map(post => (
+                  <Card key={post.id} item={post} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Nearby Properties Section */}
+          {nearbyPosts.length > 0 && (
+            <div style={{ marginBottom: '40px' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#333', marginBottom: '16px' }}>
+                Nearby Properties
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {nearbyPosts.map(post => (
+                  <Card key={post.id} item={post} />
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
 
         {/* Sidebar */}
