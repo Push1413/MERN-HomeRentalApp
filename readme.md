@@ -82,3 +82,16 @@ VITE_API_URL="http://localhost:8800/api"
     npm install
     npm run dev
     ```
+
+## 🚀 Deployment
+
+This project uses a monorepo structure. Each component is deployed separately.
+
+*   **Frontend:** Vercel (recommended)
+*   **Backend:** Heroku (using git subtree)
+*   **AI Service:** Heroku (using git subtree)
+
+See the README in each folder for specific instructions:
+*   [Backend Deployment Rules](./backend/README.md)
+*   [Frontend Deployment Rules](./frontend/README.md)
+*   [AI Service Deployment Rules](./ml_service/README.md)
